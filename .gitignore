@@ -1,0 +1,18 @@
+# Python byte-code files
+*.py[cod]
+
+# Python Package Manager Directory
+__pypackages__/
+
+# OS and IDE Files
+.DS_STORE
+.idea
+
+# Caches
+.cache
+__pycache__/
+.pytest_cache/
+
+# Environments
+.env
+venv/
