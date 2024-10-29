@@ -11,7 +11,39 @@ This information can be retrieved from https://docs.electricitymaps.com/#recent-
 and will be displayed in a csv file.
 
 ## Structure of application
-![Alt text](structure_of_app.png)
+```
+SmartestEnergyTask/
+│  
+├── models/
+│   ├── __init__.py
+│   └── carbon_intensity_history_model.py       # Pydantic models for data validation
+│
+├── results/
+│   └── carbon_intensity_20241028_120304.csv    # CSV File
+│
+├── tests/                                      # Unit tests and test cases
+│   ├── __init__.py
+│   ├── test_carbon_intensity_history.py        # Tests for carbon_intensity_history_view.py
+│   └── test_util.py                            # Tests for util.py
+│
+├── utils/             
+│   ├── __init__.py
+│   ├── api_client.py                           # Get request class
+│   └── util.py                                 # All other utils
+│ 
+├── views/                          
+│   ├── __init__.py
+│   ├── abstract_base.py                        # Abstract base models
+│   └── carbon_intensity_history_view.py        # Calculates total carbon intensity 24h
+│
+├── config.py                                   # Env variable settings
+├── endpoints.py                                # All endpoints of application
+├── exceptions.py                               # Custom exceptions
+├── log.py                                      # Logging configuration
+├── main.py                                     # Entrypoint to application
+├── README.md                                   # Project documentation
+└── requirements.txt                            # Dependencies required for the project
+```
 
 ## Run Application
 1. Create Virtual Environment ```python3.11 -m venv venv```. 
