@@ -17,12 +17,12 @@ class CarbonIntensityHistoryView(APIData):
 
     :param directory: For changing directory location
     :param: filename: For changing filename
-    :param: _api_data: internal use only
+    :param: _api_client_data: internal use only; sharing of API data
     """
 
     directory: str = None
     filename: str = 'carbon_intensity'
-    cls_api_client_data: dict = field(default=None, init=False)
+    _cls_api_client_data: dict = field(default=None, init=False)
 
     def request_data(
         self,
@@ -33,7 +33,7 @@ class CarbonIntensityHistoryView(APIData):
         :param params: Include Zone({'zone': 'GB'}) or
                        Coordinates ({'lon': '-0.1278', 'lat':'51.5074'}).
         """
-        self.instance_api_client_data = api_client.get(
+        self._instance_api_client_data = api_client.get(
             url=APIEndpoints.CARBON_INTENSITY_API,
             query_params=params,
         )
@@ -45,7 +45,7 @@ class CarbonIntensityHistoryView(APIData):
             schema_model=CarbonIntensityHistory,
             api_data=self.instance_api_client_data,
         )
-        self.instance_api_client_data = validated_data
+        self._instance_api_client_data = validated_data
         return self.instance_api_client_data
 
     @property
@@ -53,7 +53,7 @@ class CarbonIntensityHistoryView(APIData):
         """Calculate 24h carbon intensity."""
         return sum(
             data.get('carbonIntensity', 0)
-            for data in self.instance_api_client_data['history']
+            for data in self._instance_api_client_data['history']
         )
 
     @property
@@ -62,7 +62,7 @@ class CarbonIntensityHistoryView(APIData):
         return pd.DataFrame(
             {
                 'Total_carbon_intensity': [
-                    float(self.sum_carbon_intensity_data)
+                    float(self.sum_carbon_intensity_data),
                 ],
             },
         )

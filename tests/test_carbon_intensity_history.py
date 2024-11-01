@@ -45,7 +45,7 @@ def test_request_data_zone(mock_get, carbon_intensity_view):
     """Test data request with zone parameter."""
     mock_get.return_value = mock_data
     result = carbon_intensity_view.request_data(params={"zone": "GB"})
-    assert result.instance_api_client_data == mock_data
+    assert result._instance_api_client_data == mock_data
 
 
 @patch("views.carbon_intensity_history_view.api_client.get")
@@ -77,7 +77,7 @@ def test_estimated_data_flag(mock_get, carbon_intensity_view):
     result = carbon_intensity_view.request_data(params={"zone": "GB"})
     assert all(
         item["isEstimated"] is False
-        for item in result.instance_api_client_data["history"]
+        for item in result._instance_api_client_data["history"]
     )
 
 
@@ -86,7 +86,7 @@ def test_datetime_format(mock_get, carbon_intensity_view):
     """Test datetime format correctness."""
     mock_get.return_value = mock_data
     result = carbon_intensity_view.request_data(params={"zone": "GB"})
-    assert "T" in result.instance_api_client_data["history"][0]["datetime"]
+    assert "T" in result._instance_api_client_data["history"][0]["datetime"]
 
 
 @patch("views.carbon_intensity_history_view.api_client.get")
@@ -96,7 +96,7 @@ def test_emission_factor_type(mock_get, carbon_intensity_view):
     result = carbon_intensity_view.request_data(params={"zone": "GB"})
     assert all(
         item["emissionFactorType"] == "lifecycle"
-        for item in result.instance_api_client_data["history"]
+        for item in result._instance_api_client_data["history"]
     )
 
 
@@ -105,7 +105,7 @@ def test_instance_api_client_data(mock_get, carbon_intensity_view):
     """Test instance API client data assignment."""
     mock_get.return_value = mock_data
     result = carbon_intensity_view.request_data(params={"zone": "GB"})
-    assert result.instance_api_client_data == mock_data
+    assert result._instance_api_client_data == mock_data
 
 
 @patch("views.carbon_intensity_history_view.api_client.get")

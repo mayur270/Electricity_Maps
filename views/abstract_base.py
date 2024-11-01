@@ -25,9 +25,6 @@ class APIData(ABC):
         """
         Validate data.
 
-        Args:
-            data: A dictionary containing the data to validate.
-
         Returns:
             Dict[str, Any]: return validated data.
         """
