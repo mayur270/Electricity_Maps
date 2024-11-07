@@ -1,6 +1,7 @@
 """Reusable components"""
 
 import os
+import re
 from datetime import datetime
 from typing import Any, Dict
 
@@ -29,7 +30,7 @@ def data_validation(
         msg = f'Incorrect input data: {val_error.json()}'
         logger.error(msg)
         raise DataValidationError(msg)
-    except DataValidationError as data_exp:
+    except Exception as data_exp:
         msg = f'This error relates to: {data_exp}'
         logger.error(msg)
         raise DataValidationError(msg)
@@ -43,7 +44,12 @@ def output_filepath(filename: str, directory: str = None) -> str:
 
     :returns: filepath in str format.
     """
-    if directory is None:
+    if re.search(r"[\\/ ]", filename):
+        raise ValueError(
+            f"Filename, {filename}, contains '\\', '/', or space."
+        )
+
+    if not directory:
         current_dir = os.getcwd()
         directory = f'{current_dir}/results/'
 
@@ -74,14 +80,14 @@ def write_to_csv(
 
     :returns: message acknowledgement when file created.
     """
+    if not filepath:
+        logger.error("File path does not exist")
+        raise ValueError("File path does not exist.")
+
     try:
         df.to_csv(filepath, **kwargs)
         return logger.info(f'Successfully created {filepath}!')
-    except ValueError as val_error:
-        msg = f'Value Error caused due to: {val_error}'
-        logger.error(msg)
-        raise ValueError(msg)
-    except CsvFileError as csv_exp:
+    except Exception as csv_exp:
         msg = f'This error relates to: {csv_exp}'
         logger.error(msg)
         raise CsvFileError(msg)

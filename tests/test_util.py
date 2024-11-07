@@ -20,6 +20,12 @@ def test_data_validation_success():
     assert validated_data == api_data
 
 
+def test_data_validation_error():
+    api_data = {"wrong_key": "value"}
+    with pytest.raises(DataValidationError):
+        data_validation(MockSchemaModel, api_data)
+
+
 def test_output_filepath_default_directory():
     filename = "testfile"
     with patch("os.makedirs") as mock_makedirs, patch(
@@ -50,27 +56,11 @@ def test_output_filepath_os_error():
             output_filepath(filename)
 
 
-def test_write_to_csv_value_error():
-    df = pd.DataFrame({"column": [1, 2, 3]})
-    filepath = "/path/to/file.csv"
-    with patch(
-        "pandas.DataFrame.to_csv", side_effect=ValueError("Value error")
-    ):
-        with pytest.raises(ValueError):
-            write_to_csv(df, filepath)
-
-
 def test_write_to_csv_csv_file_error():
-    df = pd.DataFrame({"column": [1, 2, 3]})
+    df = pd.DataFrame()
     filepath = "/path/to/file.csv"
     with patch(
         "pandas.DataFrame.to_csv", side_effect=CsvFileError("CSV file error")
     ):
         with pytest.raises(CsvFileError):
             write_to_csv(df, filepath)
-
-
-def test_data_validation_error():
-    api_data = {"wrong_key": "value"}
-    with pytest.raises(DataValidationError):
-        data_validation(MockSchemaModel, api_data)

@@ -1,7 +1,8 @@
-# SmartestEnergy
+# ElectricityMaps
 
 - PYTHON_VERSION: 3.11
 - IDE: PyCharm
+- OS: MacOS
 
 ## Problem Statement
 Calculate the known carbon intensity (in gCO2eq/kWh) of electricity consumed in the UK 
@@ -12,7 +13,7 @@ and will be displayed in a csv file.
 
 ## Structure of application
 ```
-SmartestEnergyTask/
+ElectricityMaps/
 │  
 ├── models/
 │   ├── __init__.py

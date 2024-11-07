@@ -43,10 +43,10 @@ class CarbonIntensityHistoryView(APIData):
     def validate_data(self) -> Dict[str, Any]:
         validated_data = data_validation(
             schema_model=CarbonIntensityHistory,
-            api_data=self.instance_api_client_data,
+            api_data=self._instance_api_client_data,
         )
         self._instance_api_client_data = validated_data
-        return self.instance_api_client_data
+        return self._instance_api_client_data
 
     @property
     def sum_carbon_intensity_data(self) -> float:

@@ -22,7 +22,7 @@ class APIClient:
             Includes authorization, content-type and accept.
     """
 
-    default_headers: dict = field(default_factory=lambda: config.API_HEADERS)
+    default_headers: dict = field(default=lambda: config.API_HEADERS)
 
     def get(
             self,
