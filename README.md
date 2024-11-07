@@ -8,8 +8,8 @@
 Calculate the known carbon intensity (in gCO2eq/kWh) of electricity consumed in the UK 
 using the Electricity Maps API for the last 24 hours.
 
-This information can be retrieved from https://docs.electricitymaps.com/#recent-carbon-intensity-history 
-and will be displayed in a csv file.
+This information will be retrieved from https://docs.electricitymaps.com/#recent-carbon-intensity-history 
+and displayed in a csv file.
 
 ## Structure of application
 ```
